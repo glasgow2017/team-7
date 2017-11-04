@@ -11,7 +11,9 @@ Not very accurate but good enough for this case.
 let geoip = require('geoip-lite');
 let IPLocation = {
   lookupCountry: function (ip) {
-    return geoip.lookup(ip).country;
+    lookup = geoip.lookup(ip);
+    if(lookup === null) return 'Unknown'
+    return lookup.country;
   },
 
 }
