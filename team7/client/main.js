@@ -2,8 +2,6 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
-import './home/home.html';
-import './basic_info.html'
 
 // ============== Route ======================//
 FlowRouter.route('/basic_info', {
@@ -16,6 +14,7 @@ FlowRouter.route('/basic_info', {
 FlowRouter.route('/',{
     name: 'home',
     action(params, queryParams){
+        console.log('home');
         BlazeLayout.render('home');
     }
 });
