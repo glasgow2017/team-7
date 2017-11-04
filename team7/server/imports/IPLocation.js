@@ -266,10 +266,18 @@ function getCountryName (countryCode) {
 }
 
 let IPLocation = {
-  lookupCountry: function (ip) {
+  lookupCountryCode: function (ip) {
     lookup = geoip.lookup(ip);
     if(lookup === null) return 'Unknown'
-    return getCountryName(lookup.country);
+    return lookup.country;
   },
-
+  lookupCountry: function (ip) {
+    return getCountryName(IPLocation.lookupCountryCode(ip));
+  },
+  getClientCountryCode: function (context){
+    return IPLocation.lookupCountryCode(context.connection.clientAddress);
+  },
+  getClientCountry: function (context){
+    return IPLocation.lookupCountry(context.connection.clientAddress);
+  },
 }

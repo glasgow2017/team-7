@@ -7,7 +7,10 @@ Meteor.methods({
   },
 
   'getClientIPCountry'() {
-    ip = this.connection.clientAddress;
-    return IPLocation.lookupCountry(ip);
+    return IPLocation.getClientCountry(this);
+  },
+
+  'getClientIPCountryCode'() {
+    return IPLocation.getClientCountryCode(this);
   },
 });
