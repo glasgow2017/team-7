@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { IPLocation } from '/server/imports/IPLocation.js';
+import { IPLocation } from '../server/imports/IPLocation.js';
 
 Meteor.methods({
   'getClientIP'() {
