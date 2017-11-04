@@ -2,21 +2,43 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
+import './basic_info.html'
 
-Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+// ============== Route ======================//
+FlowRouter.route('/basic_info', {
+  name: 'basic.info',
+  action(params, queryParams) {
+     BlazeLayout.render('basic_info');
+  }
 });
 
-Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+FlowRouter.route('/',{
+    name: 'home',
+    action(params, queryParams){
+        BlazeLayout.render('home');
+    }
 });
 
-Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
+// =========== Event Handling ===============//
+Template.home.events({
+    'submit .goto-basic-info'(event) {
+      // Prevent default browser form submit
+      event.preventDefault();
+
+      // Get value from form element
+      FlowRouter.go('/basic_info');
+    },
+});
+
+Template.basic_info.events({
+  'submit .submit-basic-info'(event) {
+    // Prevent default browser form submit
+    event.preventDefault();
+
+    // Get value from form element
+    var age = event.target.inputAge.value;
+    var gender = event.target.genderRadios.value;
+    console.log(age);
+    console.log(gender);
   },
 });
