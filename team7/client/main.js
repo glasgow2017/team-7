@@ -23,6 +23,13 @@ FlowRouter.route('/quiz', {
     }
 });
 
+FlowRouter.route('/result',{
+    name: 'result',
+    action(params,queryParams){
+        BlazeLayout.render('result_page')
+    }
+});
+
 // =========== Event Handling ===============//
 Template.home.events({
     'submit .goto-basic-info'(event) {
