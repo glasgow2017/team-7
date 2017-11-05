@@ -4,7 +4,7 @@ import { HTTP } from 'meteor/http';
 import './methods.js';
 
 const TOPICS = ['SL.TLF.TOTL.FE.ZS', 'SG.VAW.1549.ZS', 'SE.SEC.ENRL.FE.ZS'];
-const LIMIT = 10;
+const LIMIT = 10000;
 const YEAR_RANGE = 10;
 const YEAR_L = new Date().getFullYear() - (1 + YEAR_RANGE);
 const YEAR_U = new Date().getFullYear() - 1;
@@ -17,12 +17,11 @@ Meteor.startup(() => {
 });
 
 function fetchData() {
-    let result;
     try {
         for (let i = 0; i < TOPICS.length; i++) {
             const response = HTTP.get(`http://api.worldbank.org/countries/indicators/${TOPICS[i]}?format=json&per_page=${LIMIT}&date=${YEAR_L}:${YEAR_U}`);
             const parseResponse = JSON.parse(response.content);
-            result = {status: response.statusCode, meta: parseResponse[0], content: removeNullValues(parseResponse[1])};
+            const result = {status: response.statusCode, meta: parseResponse[0], content: removeNullValues(parseResponse[1])};
             formatData(TOPICS[i], result.content);
             // console.log(result);
         }
