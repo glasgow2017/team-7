@@ -18,7 +18,7 @@
                 {{#each choice}}
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="question1" id="question1Answer" value= {{score}} checked>
+                    <input class="form-check-input" type="radio" name="question1" id="question1Answer" value= {{score}} unchecked required>
                     {{text}}
                   </label>
                 </div>
@@ -29,7 +29,7 @@
 
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <button type="submit" class="btn btn-primary next-question"> Next Question</button>
+            <button type="submit" class="btn btn-primary form-control next-question"> Next Question</button>
           </div>
         </div>
       </form>

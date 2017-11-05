@@ -87,7 +87,7 @@ Template.quiz.events({
           renderQuestion(questionList,qNum);
         }else{
             // go to end page;
-            console.log('end');
+            FlowRouter.go('/result');
         }
 
     },
@@ -105,6 +105,20 @@ Template.quiz.helpers({
     },
     'choice'(){
         return choiceVar.get();
+    },
+});
+
+Template.result_page.helpers({
+    'totalScore'(){
+        return totalScoreVar.get();
+    }
+});
+
+Template.result_page.events({
+    'click .back-home'(event){
+        console.log('in');
+        event.preventDefault();
+        FlowRouter.go('home');
     },
 });
 
