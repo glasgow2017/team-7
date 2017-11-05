@@ -13,7 +13,7 @@ let DATA = {};
 
 Meteor.startup(() => {
     // code to run on server at startup
-    fetchData();
+    //fetchData();
 });
 
 function fetchData() {
