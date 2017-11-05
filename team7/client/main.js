@@ -83,11 +83,20 @@ Template.quiz.events({
     'submit .quiz-question'(event){ //Check Answer
         console.log('quiz-question')
         event.preventDefault();
+        currentScore = parseFloat(event.target.question1Answer.value);
 
-        totalscore+=parseFloat(event.target.question1Answer.value);
+        totalscore+=currentScore;
         totalScoreVar.set(totalscore);
         //Show solution
-        solutionVar.set([{text:questionList[qNum].solution, score:event.target.question1Answer.value}]);
+        result = "";
+        if (currentScore == 1){
+            result = "correct";
+        }else if (currentScore == 0) {
+            result = "wrong";
+        }else{
+            result = "partially correct";
+        }
+        solutionVar.set([{text:questionList[qNum].solution, score:result}]);
         //Disable btn
 
     },
