@@ -19,7 +19,8 @@ let Questions = {
     questions = [];
     allQuestions = getQuestions();
     for (i=0; i<allQuestions.length; i++){
-      content = allQuestions[i][languageCode]
+      content = allQuestions[i][languageCode];
+      if(!content) content = allQuestions[i].EN;
 
       prompt = substituteString(content.prompt.text, content.prompt.params);
 
