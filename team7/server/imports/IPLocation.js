@@ -280,4 +280,7 @@ let IPLocation = {
   getClientCountry: function (context){
     return IPLocation.lookupCountry(context.connection.clientAddress);
   },
+  countryNameLookup: function (name){
+    return getCountryName(name);
+  },
 }

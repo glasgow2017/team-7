@@ -1,5 +1,6 @@
 import { dbQuestions } from '/server/imports/dbCollections.js';
 import { dataFetcher } from '/server/imports/fetchDataSources.js';
+import { IPLocation } from '/server/imports/IPLocation.js';
 
 export { Questions };
 
@@ -26,10 +27,17 @@ function substituteString(str, args, settings) {
           i++;
           return dataFetcher.topicFullName[settings.topic];
         }
-
         if(args[i]=="randomYear"){
           i++;
           return settings.year;
+        }
+        if(args[i]=="randomCountry"){
+          i++;
+          return IPLocation.countryNameLookup(settings.country);
+        }
+        if(args[i]=="random 0 100"){
+          i++;
+          return Math.floor(Math.random() * 101);
         }
         return args[i++];
     });
@@ -37,7 +45,7 @@ function substituteString(str, args, settings) {
 
 let Questions = {
   generateQuestions: function (countryCode, languageCode) {
-    if(countryCode === 'Unknown') { countryCode = 'GB'; }
+    if(countryCode === 'Unknown') { countryCode = 'IN'; }
 
     questions = [];
     allQuestions = getQuestions();
