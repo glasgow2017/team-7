@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { IPLocation } from '../server/imports/IPLocation.js';
 import { Questions } from '../server/imports/questions.js';
+import { recordResponses } from '../server/imports/recordResponses.js';
 
 Meteor.methods({
   'getClientIP'() {
@@ -21,5 +22,9 @@ Meteor.methods({
 
   'getQuestions'(countryCode, languageCode) {
     return Questions.generateQuestions(countryCode, languageCode);
+  },
+
+  'saveResponse'(data) {
+    recordResponses(data);
   },
 });
