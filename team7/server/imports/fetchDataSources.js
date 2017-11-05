@@ -1,6 +1,11 @@
 import { HTTP } from 'meteor/http';
 
 const TOPICS = ['SL.TLF.TOTL.FE.ZS', 'SG.VAW.1549.ZS', 'SE.SEC.ENRL.FE.ZS'];
+const TOPICSFULLNAME = {
+  'SL.TLF.TOTL.FE.ZS': "female labour force",
+  'SG.VAW.1549.ZS': "domestic violence agaist female",
+  'SE.SEC.ENRL.FE.ZS': "female completion of secondary education"
+}
 const LIMIT = 10000;
 const YEAR_RANGE = 10;
 const YEAR_L = new Date().getFullYear() - (1 + YEAR_RANGE);
@@ -56,7 +61,8 @@ function formatData(topic, array) {
 let dataFetcher = {
     fetch: fetchData,
     data: DATA,
-    topic: TOPICS
+    topic: TOPICS,
+    topicFullName: TOPICSFULLNAME
 };
 
 export { dataFetcher };
