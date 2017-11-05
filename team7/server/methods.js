@@ -12,10 +12,6 @@ Meteor.methods({
     return IPLocation.lookupCountry(this.connection.clientAddress);
   },
 
-  'getQuestions'() {
-      return true;
-  },
-
   'getClientIPCountryCode'() {
     return IPLocation.getClientCountryCode(this);
   },
@@ -25,6 +21,6 @@ Meteor.methods({
   },
 
   'saveResponse'(data) {
-    recordResponses(data);
+    recordResponses.record(data);
   },
 });
