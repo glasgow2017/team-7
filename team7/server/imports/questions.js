@@ -17,16 +17,23 @@ function substituteString(str, args) {
 let Questions = {
   generateQuestions: function (countryCode, languageCode) {
     questions = [];
-    //allQuestions = getQuestions();
+    allQuestions = getQuestions();
+    for (i=0; i<allQuestions.length; i++){
+      content = allQuestions[i][languageCode]
+
+      prompt = substituteString(content.prompt.text, content.prompt.params);
+
+      choices=[]
+      for (j=0;j<content.choices.length;j++){
+        choices.push({text: substituteString(content.choices[j].text, content.choices[j].params), score: content.choices[j].score})
+      }
+
       questions.push({
-        no: 2,
-        prompt: "temp prompt",
-        choices: [
-          {text: "Choice A", score: 1},
-          {text: "Choice B", score: 0.5},
-          {text: "Choice C", score: 0},
-        ]
+        no: allQuestions[i].no,
+        prompt: prompt,
+        choices: choices
       })
+    }
     console.log(questions);
     return questions;
   },
