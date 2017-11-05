@@ -11,7 +11,12 @@ solutionVar = new ReactiveVar([]);
 qNum = 0;
 questionList = [];
 totalscore = 0.0;
+
 geoLocation = "";
+responses = {};
+ageGroup = "";
+gender = "";
+qLang = "";
 
 // ============== Route ======================//
 FlowRouter.route('/', {
@@ -45,7 +50,6 @@ Template.home.events({
     'submit .goto-basic-info'(event) {
         // Prevent default browser form submit
         event.preventDefault();
-        console.log('home event');
 
         //Get client location based on IP
         //   Meteor.call('getClientIPCountry', (err, result) => {
@@ -65,9 +69,9 @@ Template.basic_info.events({
         event.preventDefault();
 
         // Get value from form element
-        const ageGroup = event.target.inputAge.value;
-        const gender = event.target.genderRadios.value;
-        const qLang = event.target.inputLang.value;
+        ageGroup = event.target.inputAge.value;
+        gender = event.target.genderRadios.value;
+        qLang = event.target.inputLang.value;
         // store the variable somewhere
 
         // Fetch questions from server
@@ -87,12 +91,13 @@ Template.basic_info.events({
 
 Template.quiz.events({
     'submit .quiz-question'(event){ //Check Answer
-        console.log('quiz-question')
         event.preventDefault();
-        currentScore = parseFloat(event.target.question1Answer.value);
 
+        currentScore = parseFloat(event.target.question1Answer.value);
+        responses[questionList[qNum].no] = currentScore;
         totalscore+=currentScore;
         totalScoreVar.set(totalscore);
+
         //Show solution
         result = "";
         if (currentScore == 1){
@@ -103,14 +108,17 @@ Template.quiz.events({
             result = "partially correct";
         }
         solutionVar.set([{text:questionList[qNum].solution, score:result}]);
+
         //Disable btn
         document.getElementById('checkAnswerButton').setAttribute("disabled","disabled");
 
     },
     'submit .quiz-next'(event){ //Next Question
         event.preventDefault();
+
         //Clear solution
         solutionVar.set([]);
+
         //Enable btn above
         document.getElementById('checkAnswerButton').removeAttribute("disabled");
 
@@ -118,8 +126,18 @@ Template.quiz.events({
         if (qNum < questionList.length){
           renderQuestion(questionList,qNum);
         } else{
-            // go to end page;
-            FlowRouter.go('/result');
+          // form response and record
+          response = {
+            ageGroup: ageGroup,
+            quizLanguage: qLang,
+            gender: gender,
+            geoLocation: geoLocation,
+            responses: responses
+          };
+          Meteor.call('saveResponse',response, (err, result) => {});
+          // go to end page;
+          totalScore=0.0;
+          FlowRouter.go('/result');
         }
 
     },
@@ -151,7 +169,6 @@ Template.result_page.helpers({
 
 Template.result_page.events({
     'click .back-home'(event){
-        console.log('in');
         event.preventDefault();
         FlowRouter.go('home');
     },
