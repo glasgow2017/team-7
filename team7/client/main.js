@@ -7,6 +7,7 @@ questionVar = new ReactiveVar("");
 choiceVar = new ReactiveVar([]);
 totalScoreVar = new ReactiveVar(0);
 solutionVar = new ReactiveVar([]);
+
 qNum = 0;
 questionList = [];
 totalscore = 0.0;
@@ -86,7 +87,7 @@ Template.quiz.events({
         totalscore+=parseFloat(event.target.question1Answer.value);
         totalScoreVar.set(totalscore);
         //Show solution
-        solutionVar.set([{a:"aaa"}]);
+        solutionVar.set([{text:questionList[qNum].solution, score:event.target.question1Answer.value}]);
         //Disable btn
 
     },
