@@ -104,6 +104,7 @@ Template.quiz.events({
         }
         solutionVar.set([{text:questionList[qNum].solution, score:result}]);
         //Disable btn
+        document.getElementById('checkAnswerButton').setAttribute("disabled","disabled");
 
     },
     'submit .quiz-next'(event){ //Next Question
@@ -111,6 +112,8 @@ Template.quiz.events({
         //Clear solution
         solutionVar.set([]);
         //Enable btn above
+        document.getElementById('checkAnswerButton').removeAttribute("disabled");
+
         qNum++;
         if (qNum < questionList.length){
           renderQuestion(questionList,qNum);
