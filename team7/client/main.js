@@ -51,13 +51,15 @@ Template.basic_info.events({
         // Get value from form element
         const ageGroup = event.target.inputAge.value;
         const gender = event.target.genderRadios.value;
+        const qLang = event.target.inputLang.value;
         // store the variable somewhere
 
         console.log(ageGroup);
         console.log(gender);
+        console.log(qLang);
 
         // Fetch questions from server
-        Meteor.call('getQuestions', "GB", "TH", (err, result) => {
+        Meteor.call('getQuestions', "GB", qLang, (err, result) => {
             if (!err) {
                 qNum = 0;
                 questionList = result;
