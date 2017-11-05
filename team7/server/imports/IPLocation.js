@@ -268,7 +268,7 @@ function getCountryName (countryCode) {
 let IPLocation = {
   lookupCountryCode: function (ip) {
     lookup = geoip.lookup(ip);
-    if(lookup === null) return 'Unknown'
+    if(lookup === null) return 'Unknown';
     return lookup.country;
   },
   lookupCountry: function (ip) {

@@ -11,6 +11,7 @@ solutionVar = new ReactiveVar([]);
 qNum = 0;
 questionList = [];
 totalscore = 0.0;
+geoLocation = "";
 
 // ============== Route ======================//
 FlowRouter.route('/', {
@@ -24,6 +25,11 @@ FlowRouter.route('/quiz', {
     name: 'quiz',
     action(params, queryParams) {
         BlazeLayout.render('basic_info');
+        Meteor.call('getClientIPCountryCode', (err, result) => {
+            if (!err) {
+              geoLocation=result;
+            }
+        });
     }
 });
 
@@ -65,7 +71,7 @@ Template.basic_info.events({
         // store the variable somewhere
 
         // Fetch questions from server
-        Meteor.call('getQuestions', "GB", qLang, (err, result) => {
+        Meteor.call('getQuestions', geoLocation, qLang, (err, result) => {
             if (!err) {
                 qNum = 0;
                 questionList = result;
