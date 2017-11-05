@@ -6,7 +6,6 @@ import './methods.js';
 let data = {};
 Meteor.startup(() => {
     // code to run on server at startup
-    fetchData();
 });
 
 function fetchData() {
