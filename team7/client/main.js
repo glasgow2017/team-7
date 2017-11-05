@@ -86,7 +86,7 @@ Template.quiz.events({
         totalscore+=parseFloat(event.target.question1Answer.value);
         totalScoreVar.set(totalscore);
         //Show solution
-        solutionVar.set[{a:"aaa"}];
+        solutionVar.set([{a:"aaa"}]);
         //Disable btn
 
     },
@@ -94,6 +94,7 @@ Template.quiz.events({
         event.preventDefault();
         //Clear solution
         solutionVar.set([]);
+        //Enable btn above
         qNum++;
         if (qNum < questionList.length){
           renderQuestion(questionList,qNum);
