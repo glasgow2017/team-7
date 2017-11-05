@@ -13,7 +13,8 @@ function fetchData() {
     let result;
     try {
         // female work force percentage
-        const response = HTTP.get('http://api.worldbank.org/countries/indicators/SL.TLF.TOTL.FE.ZS?format=json&per_page=10000&date=2006:2016');
+        const currentYear = new Date().getFullYear();
+        const response = HTTP.get('http://api.worldbank.org/countries/indicators/SL.TLF.TOTL.FE.ZS?format=json&per_page=10000&date=' + (currentYear - 11) + ':' + (currentYear - 1));
         //response = JSON.parse(response);
         const data = JSON.parse(response.content);
         result = {status: response.statusCode, meta: data[0], content: removeNullValues(data[1])};
