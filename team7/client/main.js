@@ -5,8 +5,10 @@ import './main.html';
 questionNum = new ReactiveVar(0);
 questionVar = new ReactiveVar("");
 choiceVar = new ReactiveVar([]);
+totalScoreVar = new ReactiveVar(0);
 qNum = 0;
 questionList = [];
+totalscore = 0.0;
 
 // ============== Route ======================//
 FlowRouter.route('/', {
@@ -51,7 +53,6 @@ Template.home.events({
 
 Template.basic_info.events({
     'submit .submit-basic-info'(event) {
-        console.log('basic_info event');
         // Prevent default browser form submit
         event.preventDefault();
 
@@ -60,10 +61,6 @@ Template.basic_info.events({
         const gender = event.target.genderRadios.value;
         const qLang = event.target.inputLang.value;
         // store the variable somewhere
-
-        console.log(ageGroup);
-        console.log(gender);
-        console.log(qLang);
 
         // Fetch questions from server
         Meteor.call('getQuestions', "GB", qLang, (err, result) => {
@@ -82,11 +79,12 @@ Template.basic_info.events({
 
 Template.quiz.events({
     'submit'(event){
-        console.log('quiz event');
         event.preventDefault();
         qNum++;
         if (qNum < questionList.length){
-            renderQuestion(questionList,qNum);
+          totalscore+=parseFloat(event.target.question1Answer.value);
+          totalScoreVar.set(totalscore);
+          renderQuestion(questionList,qNum);
         }else{
             // go to end page;
             console.log('end');
@@ -96,6 +94,9 @@ Template.quiz.events({
 });
 
 Template.quiz.helpers({
+    'totalScore'(){
+        return totalScoreVar.get();
+    },
     'questionNum'(){
         return questionNum.get();
     },
@@ -109,13 +110,6 @@ Template.quiz.helpers({
 
 
 function renderQuestion(questions,qNum){
-    const size = questions.length;
-    /*
-    console.log(size);
-    temp = []
-    for (let i = 0; i< size;++i){
-        temp.push(questions[i].choice);
-    }*/
     questionNum.set(qNum + 1);
     questionVar.set(questions[qNum].prompt);
     choiceVar.set(questions[qNum].choices);
