@@ -6,6 +6,7 @@ questionNum = new ReactiveVar(0);
 questionVar = new ReactiveVar("");
 choiceVar = new ReactiveVar([]);
 totalScoreVar = new ReactiveVar(0);
+solutionVar = new ReactiveVar([]);
 qNum = 0;
 questionList = [];
 totalscore = 0.0;
@@ -78,14 +79,25 @@ Template.basic_info.events({
 });
 
 Template.quiz.events({
-    'submit'(event){
+    'submit .quiz-question'(event){ //Check Answer
+        console.log('quiz-question')
         event.preventDefault();
+
+        totalscore+=parseFloat(event.target.question1Answer.value);
+        totalScoreVar.set(totalscore);
+        //Show solution
+        solutionVar.set[{a:"aaa"}];
+        //Disable btn
+
+    },
+    'submit .quiz-next'(event){ //Next Question
+        event.preventDefault();
+        //Clear solution
+        solutionVar.set([]);
         qNum++;
         if (qNum < questionList.length){
-          totalscore+=parseFloat(event.target.question1Answer.value);
-          totalScoreVar.set(totalscore);
           renderQuestion(questionList,qNum);
-        }else{
+        } else{
             // go to end page;
             FlowRouter.go('/result');
         }
@@ -94,6 +106,9 @@ Template.quiz.events({
 });
 
 Template.quiz.helpers({
+    'solution'(){
+        return solutionVar.get();
+    },
     'totalScore'(){
         return totalScoreVar.get();
     },
@@ -127,6 +142,5 @@ function renderQuestion(questions,qNum){
     questionNum.set(qNum + 1);
     questionVar.set(questions[qNum].prompt);
     choiceVar.set(questions[qNum].choices);
-
 
 }

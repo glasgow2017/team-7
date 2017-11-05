@@ -5,7 +5,7 @@
           <div class="jumbotron text-center header-ban">
             <h1>Equal Measures 2030</h1>
         </div>
-        <form>
+        <form class="quiz-question">
 
         <div class="row">
           <div class = "col-sm6 col-sm-offset-3">
@@ -29,10 +29,22 @@
 
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <button type="submit" class="btn btn-primary form-control next-question"> Next Question</button>
+            <button type="submit" class="btn btn-primary form-control next-question">Check Answer</button>
           </div>
         </div>
+
+        </form>
+
+        <form class="quiz-next">
+        {{#each solution}}
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <button type="submit" class="btn btn-primary next-question">Next Question{{a}}</button>
+          </div>
+        </div>
+        {{/each}}
       </form>
+
       </div>
 
 </template>
