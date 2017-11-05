@@ -1,4 +1,5 @@
 import { dbQuestions } from '/server/imports/dbCollections.js';
+import { dataFetcher } from '../server/imports/fetchDataSources.js';
 
 export { Questions };
 
