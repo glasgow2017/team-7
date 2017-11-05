@@ -111,7 +111,7 @@ function renderQuestion(questions,qNum){
     }*/
     questionNum.set(qNum + 1);
     questionVar.set(questions[qNum].prompt);
-    choiceVar.set(    questions[qNum].choices );
+    choiceVar.set(questions[qNum].choices);
 
 
 }
