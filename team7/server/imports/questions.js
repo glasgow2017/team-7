@@ -28,10 +28,13 @@ let Questions = {
         choices.push({text: substituteString(content.choices[j].text, content.choices[j].params), score: content.choices[j].score})
       }
 
+      sol = substituteString(content.solution.text, content.solution.params);
+
       questions.push({
         no: allQuestions[i].no,
         prompt: prompt,
-        choices: choices
+        choices: choices,
+        solution: sol
       })
     }
     return questions;
