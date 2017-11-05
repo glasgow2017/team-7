@@ -4,7 +4,7 @@ import { dataFetcher } from '/server/imports/fetchDataSources.js';
 export { Questions };
 
 let getQuestions = function(){
-  return dbQuestions.find({}, {sort: {no: 1}}).fetch();
+  return dbQuestions.find({}, {sort: {no: -1}}).fetch();
 };
 
 function selectRandom(cc) {
@@ -38,14 +38,15 @@ function substituteString(str, args, settings) {
 let Questions = {
   generateQuestions: function (countryCode, languageCode) {
     if(countryCode === 'Unknown') { countryCode = 'GB'; }
-    settings = selectRandom(countryCode);
-    console.log(settings);
 
     questions = [];
     allQuestions = getQuestions();
-    for (i=0; i<allQuestions.length; i++){
-      content = allQuestions[i][languageCode];
+    for (i=0; i<5; i++){
+      content = allQuestions[0][languageCode];
       if(!content) content = allQuestions[i].EN;
+
+      settings = selectRandom(countryCode);
+      console.log(settings);
 
       prompt = substituteString(content.prompt.text, content.prompt.params, settings);
 
@@ -57,7 +58,7 @@ let Questions = {
       sol = substituteString(content.solution.text, content.solution.params, settings);
 
       questions.push({
-        no: allQuestions[i].no,
+        no: allQuestions[0].no+JSON.stringify(settings),
         prompt: prompt,
         choices: choices,
         solution: sol
