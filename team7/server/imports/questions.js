@@ -16,6 +16,8 @@ function substituteString(str, args) {
 
 let Questions = {
   generateQuestions: function (countryCode, languageCode) {
+    if(countryCode === 'Unknown') countryCode = 'GB';
+
     questions = [];
     allQuestions = getQuestions();
     for (i=0; i<allQuestions.length; i++){
