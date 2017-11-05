@@ -3,6 +3,7 @@ import { HTTP } from 'meteor/http';
 
 import './methods.js';
 
+let data = {};
 Meteor.startup(() => {
     // code to run on server at startup
     fetchData();
@@ -11,11 +12,13 @@ Meteor.startup(() => {
 function fetchData() {
     let result;
     try {
-        const response = HTTP.get('http://api.worldbank.org/countries/indicators/SL.TLF.TOTL.FE.ZS?format=json&per_page=20&date=2006:2016');
+        // female work force percentage
+        const response = HTTP.get('http://api.worldbank.org/countries/indicators/SL.TLF.TOTL.FE.ZS?format=json&per_page=10000&date=2006:2016');
         //response = JSON.parse(response);
         const data = JSON.parse(response.content);
         result = {status: response.statusCode, meta: data[0], content: removeNullValues(data[1])};
-        console.log(result);
+        fomatData(result.content);
+        // console.log(result);
     } catch(e) {
         console.log(e);
     }
@@ -30,4 +33,19 @@ function removeNullValues(array) {
         }
     }
     return formattedArray;
+}
+
+function fomatData(array){
+    const size = array.length;
+    for (let i = 0; i < size; ++i){
+        const countryId = array[i].country.id;
+        if (!(countryId in data)){
+            data[countryId] = {};
+        }
+        const date = array[i].date;
+        const val = array[i].value;
+        data[countryId][date] = val;
+    }
+    console.log("data: ",data);
+
 }
