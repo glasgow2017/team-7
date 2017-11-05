@@ -34,7 +34,6 @@ let Questions = {
         choices: choices
       })
     }
-    console.log(questions);
     return questions;
   },
 }

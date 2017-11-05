@@ -47,6 +47,5 @@ function fomatData(array){
         const val = array[i].value;
         data[countryId][date] = val;
     }
-    console.log("data: ",data);
 
 }
