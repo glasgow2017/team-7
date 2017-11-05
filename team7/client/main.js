@@ -2,7 +2,11 @@ import { Template } from 'meteor/templating';
 
 import './main.html';
 
-let QUESTIONS;
+questionNum = new ReactiveVar(0);
+questionVar = new ReactiveVar("");
+choiceVar = new ReactiveVar([]);
+qNum = 0;
+questionList = [];
 
 // ============== Route ======================//
 FlowRouter.route('/', {
@@ -24,6 +28,7 @@ Template.home.events({
     'submit .goto-basic-info'(event) {
         // Prevent default browser form submit
         event.preventDefault();
+        console.log('home event');
 
         //Get client location based on IP
         //   Meteor.call('getClientIPCountry', (err, result) => {
@@ -39,6 +44,7 @@ Template.home.events({
 
 Template.basic_info.events({
     'submit .submit-basic-info'(event) {
+        console.log('basic_info event');
         // Prevent default browser form submit
         event.preventDefault();
 
@@ -51,10 +57,11 @@ Template.basic_info.events({
         console.log(gender);
 
         // Fetch questions from server
-        Meteor.call('getQuestions', (err, result) => {
+        Meteor.call('getQuestions', "GB", "TH", (err, result) => {
             if (!err) {
-                QUESTIONS = result;
-                console.log(QUESTIONS);
+                qNum = 0;
+                questionList = result;
+                renderQuestion(questionList,qNum);
                 BlazeLayout.render('quiz');
             }
             else {
@@ -63,3 +70,46 @@ Template.basic_info.events({
         });
     },
 });
+
+Template.quiz.events({
+    'submit'(event){
+        console.log('quiz event');
+        event.preventDefault();
+        qNum++;
+        if (qNum < questionList.length){
+            renderQuestion(questionList,qNum);
+        }else{
+            // go to end page;
+            console.log('end');
+        }
+
+    },
+});
+
+Template.quiz.helpers({
+    'questionNum'(){
+        return questionNum.get();
+    },
+    'question'(){
+            return questionVar.get();
+    },
+    'choice'(){
+        return choiceVar.get();
+    },
+});
+
+
+function renderQuestion(questions,qNum){
+    const size = questions.length;
+    /*
+    console.log(size);
+    temp = []
+    for (let i = 0; i< size;++i){
+        temp.push(questions[i].choice);
+    }*/
+    questionNum.set(qNum + 1);
+    questionVar.set(questions[qNum].prompt);
+    choiceVar.set(    questions[qNum].choices );
+
+
+}

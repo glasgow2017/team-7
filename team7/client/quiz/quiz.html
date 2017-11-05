@@ -4,26 +4,36 @@
       <div class="container">
           <div class="jumbotron text-center header-ban">
             <h1>Equal Measures 2030</h1>
-          </div>
+        </div>
+        <form>
+
         <div class="row">
             <div class = "col-sm6 col-sm-offset-3">
-                <h3 id="QuestionHeader">Question 1</h3>
-                <p id="Question1">question should be here so the thext should be at least this long </p>
+                <h3 id="QuestionHeader">Question {{questionNum}}</h3>
+                <p id="Question1"> {{question}} </p>
             </div>
             <div class = "col-sm-6 col-sm-offset-3">
               <div class="form-group">
                   <!-- put loops here -->
+                  {{#each choice}}
+
                 <div class="form-check">
                   <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="question1" id="question1Answer1" value="ANSWER HERE" checked>
-                    Answer
+                    <input class="form-check-input" type="radio" name="question1" id="question1Answer1" value= {{text}} checked>
+                    {{text}}
                 </label>
                 </div>
                 <!-- end loop here  -->
+                    {{/each}}
             </div>
           </div>
           </div>
-
+          <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+              <button type="submit" class="btn btn-primary next-question"> Next Question</button>
+            </div>
+          </div>
+      </form>
       </div>
 
 </template>
