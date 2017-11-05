@@ -13,4 +13,8 @@ Meteor.methods({
   'getQuestions'() {
       return true;
   },
+
+  'getClientIPCountryCode'() {
+    return IPLocation.getClientCountryCode(this);
+  },
 });
