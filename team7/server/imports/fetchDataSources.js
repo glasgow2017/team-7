@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http';
 
 const TOPICS = ['SL.TLF.TOTL.FE.ZS', 'SG.VAW.1549.ZS', 'SE.SEC.ENRL.FE.ZS'];
@@ -15,7 +14,11 @@ function fetchData() {
         for (let i = 0; i < TOPICS.length; i++) {
             const response = HTTP.get(`http://api.worldbank.org/countries/indicators/${TOPICS[i]}?format=json&per_page=${LIMIT}&date=${YEAR_L}:${YEAR_U}`);
             const parseResponse = JSON.parse(response.content);
-            const result = {status: response.statusCode, meta: parseResponse[0], content: removeNullValues(parseResponse[1])};
+            const result = {
+                status: response.statusCode,
+                meta: parseResponse[0],
+                content: removeNullValues(parseResponse[1])
+            };
             formatData(TOPICS[i], result.content);
             // console.log(result);
         }
@@ -41,7 +44,9 @@ function formatData(topic, array) {
     let data = {};
     for (let i = 0; i < size; ++i) {
         const countryId = array[i].country.id;
-        if (!(countryId in data)) {data[countryId] = {};}
+        if (!(countryId in data)) {
+            data[countryId] = {};
+        }
         data[countryId][array[i].date] = array[i].value;
     }
     DATA[topic] = data;
@@ -49,8 +54,9 @@ function formatData(topic, array) {
 
 
 let dataFetcher = {
-  fetch: fetchData,
-  data: DATA
-}
+    fetch: fetchData,
+    data: DATA,
+    topic: TOPICS
+};
 
 export { dataFetcher };
