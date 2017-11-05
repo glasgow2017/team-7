@@ -17,10 +17,9 @@ function substituteString(str, args) {
 let Questions = {
   generateQuestions: function (countryCode, languageCode) {
     questions = [];
-    allQuestions = getQuestions();
-    for (i=0; i<allQuestions.length; i++){
+    //allQuestions = getQuestions();
       questions.push({
-        no: allQuestions[i].no,
+        no: 2,
         prompt: "temp prompt",
         choices: [
           {text: "Choice A", score: 1},
@@ -28,7 +27,6 @@ let Questions = {
           {text: "Choice C", score: 0},
         ]
       })
-    }
     console.log(questions);
     return questions;
   },
