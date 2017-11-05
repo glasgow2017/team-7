@@ -2,9 +2,9 @@ import { HTTP } from 'meteor/http';
 
 const TOPICS = ['SL.TLF.TOTL.FE.ZS', 'SG.VAW.1549.ZS', 'SE.SEC.ENRL.FE.ZS'];
 const TOPICSFULLNAME = {
-  'SL.TLF.TOTL.FE.ZS': "female labour force",
-  'SG.VAW.1549.ZS': "domestic violence agaist female",
-  'SE.SEC.ENRL.FE.ZS': "female completion of secondary education"
+  'SL.TLF.TOTL.FE.ZS': {EN:"female labour force", TH:"แรงงานหญิง"},
+  'SG.VAW.1549.ZS': {EN:"domestic violence agaist female", TH:"การใช้ความรุนแรงต่อเพศหญิง"},
+  'SE.SEC.ENRL.FE.ZS': {EN:"female completion of secondary education", TH:"การจบการศึกษาขั้นสูงของพศหญิง"}
 }
 const LIMIT = 10000;
 const YEAR_RANGE = 10;

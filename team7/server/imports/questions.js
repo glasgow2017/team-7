@@ -25,7 +25,7 @@ function substituteString(str, args, settings) {
         }
         if(args[i]=="randomTopic"){
           i++;
-          return dataFetcher.topicFullName[settings.topic];
+          return dataFetcher.topicFullName[settings.topic][settings.lCode];
         }
         if(args[i]=="randomYear"){
           i++;
@@ -54,6 +54,7 @@ let Questions = {
       if(!content) content = allQuestions[i].EN;
 
       settings = selectRandom(countryCode);
+      settings.lCode = languageCode;
       console.log(settings);
 
       prompt = substituteString(content.prompt.text, content.prompt.params, settings);
